@@ -22,8 +22,22 @@ public class BadCodeExample {
         resultList.size();
         System.out.println(resultList.size());
 
-        //getText
-        //For
+        int res = resultList.size();
+        int res1 = 0;
+        String searchTerm = " Selenium ";
+
+        while (res > 0){
+            String myText = resultList.get(res1).getText();
+            System.out.println(myText);
+            if (myText.contains(searchTerm)){
+                System.out.println("//searchTerm found//");
+            } else {
+                System.out.println("//searchTerm not found//");
+            }
+            res--;
+            res1++;
+
+        }
 
     }
 
