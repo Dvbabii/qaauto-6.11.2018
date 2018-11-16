@@ -39,14 +39,14 @@ public class LoginTest {
         WebElement emailField = webDriver.findElement(By.xpath("//*[@id='login-email']"));
         WebElement passwordField = webDriver.findElement(By.xpath("//*[@id='login-password']"));
         WebElement signInButton = webDriver.findElement(By.xpath("//*[@id='login-submit']"));
-//        WebElement nameSurname = webDriver.findElement(By.xpath("//*[@id='ember216']/span)"));
+//      WebElement nameSurname = webDriver.findElement(By.xpath("//*[@id='ember216']/span)"));
 
         emailField.sendKeys("truekvazar@gmail.com");
         passwordField.sendKeys("dimon007");
         signInButton.click();
-//        System.out.println(nameSurname.getText());
+//      System.out.println(nameSurname.getText());
         Assert.assertEquals(webDriver.getTitle(), "LinkedIn");
-//        Assert.assertTrue(nameSurname.isDisplayed());
+//      Assert.assertTrue(nameSurname.isDisplayed());
 
         //*[@id="login-email"]
     }
