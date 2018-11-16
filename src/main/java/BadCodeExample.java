@@ -12,9 +12,11 @@ public class BadCodeExample {
 
         System.out.println("Hello world");
         WebDriver webDriver = new ChromeDriver();
+        String searchTerm = "Selenium ";
         webDriver.get("https://www.google.ru/");
+
         WebElement element = webDriver.findElement(By.name("q"));
-        element.sendKeys("Selenium");
+        element.sendKeys(searchTerm);
         element.sendKeys(Keys.ENTER);
 
         List<WebElement> resultList = webDriver.findElements(By.xpath("//div[@class='srg']/div[@class='g']"));
@@ -22,32 +24,36 @@ public class BadCodeExample {
         resultList.size();
         System.out.println(resultList.size());
 
-        int res = resultList.size();
-        int res1 = 0;
-        String searchTerm = " Selenium ";
+        //for each WebElement 'result" in list of WebElements 'resultList' print Text.
+        for(WebElement result : resultList) {
+            //каждый елемент из списка resultList - будет result
+            String resultText = result.getText();
 
-        while (res > 0){
-            String myText = resultList.get(res1).getText();
-            System.out.println(myText);
-            if (myText.contains(searchTerm)){
-                System.out.println("//searchTerm found//");
-            } else {
-                System.out.println("//searchTerm not found//");
+            if (resultText.toLowerCase().contains(searchTerm.toLowerCase())) {
+                System.out.println("searchTerm " + searchTerm + "found in block:\n" + resultText);
             }
-            res--;
-            res1++;
+                else {
+                System.out.println("searchTerm " + searchTerm + "NOT found in block:\n" + resultText);
+                }
+        }
+//        int res = resultList.size();
+//        int res1 = 0;
+//
+//        while (res > 0){
+//            String myText = resultList.get(res1).getText();
+//            System.out.println(myText);
+//            if (myText.contains(searchTerm)){
+//                System.out.println("//searchTerm found//");
+////            } else {
+//                System.out.println("//searchTerm not found//");
+//            }
+//            res--;
+//            res1++;
+//        }
+
+
 
         }
 
     }
 
-
-
-
-
-
-
-
-
-
-}
