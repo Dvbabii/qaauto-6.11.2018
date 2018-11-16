@@ -3,51 +3,48 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import java.util.concurrent.TimeUnit;
 
 
 public class LoginTest {
+    WebDriver webDriver;
 
-   // @Test
-//    public void negativeLoginTest() {
-//
-//        WebDriver webDriver = new ChromeDriver();
-//        webDriver.get("https://www.linkedin.com/");
-//
-//        WebElement emailField = webDriver.findElements(By.xpath("//*[@id='login-email']"));
-//        WebElement passwordField = webDriver.findElements(By.xpath("//*[@id='login-password']"));
-//        WebElement signInButton = webDriver.findElements(By.xpath("//*[@id='login-submit']"));
-//
-//        emailField.sendKeys("a@b.c");
-//        passwordField.sendKeys("");
-//        signInButton.click();
-//
-//        //Verify that page title is "LinkedIn: Войти или зарегистрироваться"
-//        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться");
-//
-//        //*[@id="login-email"]
-//    }
+    @BeforeMethod
+    public void beforeMethod(){
+        webDriver = new ChromeDriver();
+        webDriver.get("https://www.linkedin.com/");
+    }
+
+    @AfterMethod
+    public void afterMethod(){
+        webDriver.quit();
+
+    }
 
     @Test
-    public void positiveLoginTest() {
+    public void negativeLoginTest() {
+        //создаются в памяти все переменные, потом выполняется код из конструктора LoginPage
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("a@b.c", "");
 
-        WebDriver webDriver = new ChromeDriver();
-        webDriver.get("https://www.linkedin.com/");
-        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebElement emailField = webDriver.findElement(By.xpath("//*[@id='login-email']"));
-        WebElement passwordField = webDriver.findElement(By.xpath("//*[@id='login-password']"));
-        WebElement signInButton = webDriver.findElement(By.xpath("//*[@id='login-submit']"));
-//      WebElement nameSurname = webDriver.findElement(By.xpath("//*[@id='ember216']/span)"));
+        //Verify that page title is "LinkedIn: Войти или зарегистрироваться"
+        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться", "Login page title is wrong");
+        //Assert.assertEquals(signInButton.isDisplayed(), true);
+        Assert.assertTrue(loginPage.signInButton.isDisplayed(), "SignIn button is not displayed");
+    }
 
-        emailField.sendKeys("truekvazar@gmail.com");
-        passwordField.sendKeys("dimon007");
-        signInButton.click();
-//      System.out.println(nameSurname.getText());
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn");
-//      Assert.assertTrue(nameSurname.isDisplayed());
+    @Test
+    public void successfulLoginTest() {
+        //создаются в памяти все переменные, потом выполняется код из конструктора LoginPage
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("truekvazar@gmail.com", "dimon007");
 
-        //*[@id="login-email"]
+        WebElement welcomeMessage = webDriver.findElement(By.xpath("//a[@data-control-name='identity_welcome_message']"));
+        Assert.assertTrue(webDriver.getTitle().contains("LinkedIn"), "Home page title is wrong");
+        Assert.assertTrue(welcomeMessage.isDisplayed(), "Welcome message is not displayed");
+
     }
 }
