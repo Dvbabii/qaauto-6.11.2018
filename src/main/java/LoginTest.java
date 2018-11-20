@@ -28,12 +28,61 @@ public class LoginTest {
     public void negativeLoginTest() {
         //создаются в памяти все переменные, потом выполняется код из конструктора LoginPage
         LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("a@b.c", "");
+        loginPage.login("a@b.c", "pass");
 
         //Verify that page title is "LinkedIn: Войти или зарегистрироваться"
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться", "Login page title is wrong");
-        //Assert.assertEquals(signInButton.isDisplayed(), true);
+        Assert.assertEquals(webDriver.getTitle(), "Войти в LinkedIn", "Login page title is wrong");
+        //Assert.assertEquals(Assert.assertEquals(signInButton.isDisplayed(), true);
         Assert.assertTrue(loginPage.signInButton.isDisplayed(), "SignIn button is not displayed");
+    }
+
+
+    @Test
+    public void blankEmailLoginTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("", "pass");
+
+        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться", "Login page title is wrong");
+    }
+
+    @Test
+    public void blankPassLoginTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("truekvazar@gmail.com", "");
+
+        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться", "Login page title is wrong");
+    }
+
+    @Test
+    public void blankAllLoginTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("", "");
+
+        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться", "Login page title is wrong");
+    }
+
+    @Test
+    public void wrongEmailLoginTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("truekvazar", "dimon007");
+
+        Assert.assertEquals(webDriver.getTitle(), "Войти в LinkedIn", "Login page title is wrong");
+    }
+
+    @Test
+    public void wrongPassLoginTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("truekvazar@gmail.com", "dimon");
+
+        Assert.assertEquals(webDriver.getTitle(), "Войти в LinkedIn", "Login page title is wrong");
+    }
+
+    @Test
+    public void wrongAllLoginTest() {
+        LoginPage loginPage = new LoginPage(webDriver);
+        loginPage.login("xxx", "xxx");
+
+        Assert.assertEquals(webDriver.getTitle(), "Войти в LinkedIn", "Login page title is wrong");
     }
 
     @Test
