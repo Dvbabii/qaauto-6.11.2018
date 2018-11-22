@@ -4,19 +4,20 @@ import org.openqa.selenium.WebElement;
 
 public class LoginPage {
 
-    WebDriver webDriver;
-
+    private WebDriver webDriver;
     //webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    WebElement emailField;
-    WebElement passwordField;
-    WebElement signInButton;
+    private WebElement emailField;
+    private WebElement passwordField;
+    private WebElement signInButton;
 
+    //конструктор класса
     public LoginPage(WebDriver webDriver){
+        //приравниваю webDriver из этого класса к webDriver из класса LoginTest в его теперешнем состоянии
         this.webDriver = webDriver;
         initElements();
     }
 
-    public void initElements(){
+    private void initElements(){
         //опустили инициализацию из класса в метод переменных после присваивания переменной webDriver в конструкторе класса
         emailField = webDriver.findElement(By.xpath("//*[@id='login-email']"));
         passwordField = webDriver.findElement(By.xpath("//*[@id='login-password']"));
@@ -27,5 +28,11 @@ public class LoginPage {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPass);
         signInButton.click();
+    }
+
+    public boolean isPageLoaded() {
+        return signInButton.isDisplayed()
+                && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться")
+                && webDriver.getCurrentUrl().equals("https://www.linkedin.com/");
     }
 }
