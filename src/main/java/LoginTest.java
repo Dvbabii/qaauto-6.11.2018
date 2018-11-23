@@ -1,12 +1,9 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.util.concurrent.TimeUnit;
 
 
 public class LoginTest {
@@ -38,29 +35,40 @@ public class LoginTest {
     public void successfulLoginTest() {
         //создаются в памяти все переменные, потом выполняется код из конструктора LoginPage
         LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("truekvazar@gmail.com", "dimon007");
+        HomePage homePage = loginPage.loginToHome("truekvazar@gmail.com", "dimon007");
 
         //HomePage1 = екземпляр какого класса, HomePage2 = екземпляр
-        HomePage homePage = new HomePage(webDriver);
-
-
+        //HomePage homePage = new HomePage(webDriver);
         //Assert.assertTrue(webDriver.getTitle().contains("LinkedIn"), "Home page title is wrong");
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
-
     }
     @Test
     public void wrongEmailLoginTest() {
         LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("truekvazar", "dimon007");
+        loginPage.loginToLoginSubmit("truekvazar", "dimon007");
 
         LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
-
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit page is not loaded.");
     }
+
+    @Test
+    public void negativeLeadsToLoginSubmitPage(){
+        LoginPage loginPage = new LoginPage(webDriver);
+
+        //LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver); =↓
+        LoginSubmitPage loginSubmitPage = loginPage.loginToLoginSubmit("truekvazar@@gmail.com", "dimon007");
+
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit page is not loaded.");
+        Assert.assertEquals(loginSubmitPage.getUserEmailError(), "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", "userEmail validation message is wrong");
+        Assert.assertEquals(loginSubmitPage.getUserPassError(), "", "userPass validation message appears");
+    }
+
 //    @Test
 //    public void blankEmailLoginTest() {
 //        LoginPage loginPage = new LoginPage(webDriver);
 //        loginPage.login("", "pass");
+//
+//        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(webDriver);
 //
 //        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться", "Login page title is wrong");
 //    }
@@ -108,19 +116,6 @@ public class LoginTest {
 //    }
 //
 
-    @Test
-    public void negativeLeadsToLoginSubmitPage(){
-        LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("truekvazar@@gmail.com", "dimon007");
 
-        WebElement loginForm = webDriver.findElement(By.xpath("//form[@class='login__form']"));
-        Assert.assertTrue(loginForm.isDisplayed(), "Login Submit page is not loaded");
-
-        WebElement userEmailError = webDriver.findElement(By.xpath("//div[@id='error-for-username']"));
-        Assert.assertEquals(userEmailError.getText(), "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", "userEmail validation message is wrong");
-
-        WebElement userPassError = webDriver.findElement(By.xpath("//div[@id='error-for-password']"));
-        Assert.assertEquals(userPassError.getText(), "", "userPass validation message appears");
-    }
 
 }

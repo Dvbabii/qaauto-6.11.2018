@@ -4,8 +4,8 @@ import org.openqa.selenium.WebElement;
 
 public class HomePage {
 
-    WebDriver webDriver;
-    WebElement homeButton;
+    private WebDriver webDriver;
+    private WebElement homeButton;
 
     public HomePage(WebDriver webDriver){
         this.webDriver = webDriver;
@@ -19,7 +19,7 @@ public class HomePage {
 
     public boolean isPageLoaded() {
         return homeButton.isDisplayed()
-                && webDriver.getTitle().equals("LinkedIn")
+                && webDriver.getTitle().contains("LinkedIn")
                 && webDriver.getCurrentUrl().equals("https://www.linkedin.com/feed/");
     }
 }

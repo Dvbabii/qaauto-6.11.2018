@@ -1,33 +1,49 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 
     private WebDriver webDriver;
-    //webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+    @FindBy(xpath = "//*[@id='login-email']")
     private WebElement emailField;
+    @FindBy(xpath = "//*[@id='login-password']")
     private WebElement passwordField;
+    @FindBy(xpath = "//*[@id='login-submit']")
     private WebElement signInButton;
 
     //конструктор класса
     public LoginPage(WebDriver webDriver){
         //приравниваю webDriver из этого класса к webDriver из класса LoginTest в его теперешнем состоянии
         this.webDriver = webDriver;
-        initElements();
+        //паттерн PageFactory
+        PageFactory.initElements(webDriver,this);
     }
 
-    private void initElements(){
-        //опустили инициализацию из класса в метод переменных после присваивания переменной webDriver в конструкторе класса
-        emailField = webDriver.findElement(By.xpath("//*[@id='login-email']"));
-        passwordField = webDriver.findElement(By.xpath("//*[@id='login-password']"));
-        signInButton = webDriver.findElement(By.xpath("//*[@id='login-submit']"));
-    }
-
-    public void login (String userEmail, String userPass) {
+    public LoginSubmitPage loginToLoginSubmit(String userEmail, String userPass) {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPass);
         signInButton.click();
+        //создали обьект LoginSubmitPage и вернули его в "public LoginSubmitPage login"
+        return new LoginSubmitPage(webDriver);
+    }
+
+    public HomePage loginToHome(String userEmail, String userPass) {
+        emailField.sendKeys(userEmail);
+        passwordField.sendKeys(userPass);
+        signInButton.click();
+        //создали обьект LoginSubmitPage и вернули его в "public LoginSubmitPage login"
+        return new HomePage(webDriver);
+    }
+
+    public LoginPage login(String userEmail, String userPass) {
+        emailField.sendKeys(userEmail);
+        passwordField.sendKeys(userPass);
+        signInButton.click();
+        //создали обьект LoginSubmitPage и вернули его в "public LoginSubmitPage login"
+        return new LoginPage(webDriver);
     }
 
     public boolean isPageLoaded() {
