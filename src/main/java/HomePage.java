@@ -1,24 +1,20 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class HomePage {
+public class HomePage extends BasePage{
 
-    private WebDriver webDriver;
-    private WebElement homeButton;
+    @FindBy(xpath = "//*[@data-control-name='identity_welcome_message']")
+    private WebElement welcomeMessage;
 
     public HomePage(WebDriver webDriver){
         this.webDriver = webDriver;
-        initElements();
-    }
-
-    private void initElements(){
-        //опустили инициализацию из класса в метод переменных после присваивания переменной webDriver в конструкторе класса
-        homeButton = webDriver.findElement(By.xpath("//*[@id='feed-nav-item']/a"));
+        PageFactory.initElements(webDriver,this);
     }
 
     public boolean isPageLoaded() {
-        return homeButton.isDisplayed()
+        return welcomeMessage.isDisplayed()
                 && webDriver.getTitle().contains("LinkedIn")
                 && webDriver.getCurrentUrl().equals("https://www.linkedin.com/feed/");
     }
