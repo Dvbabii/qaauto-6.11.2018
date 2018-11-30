@@ -22,14 +22,6 @@ public class LoginTest {
 
     }
 
-    @Test
-    public void negativeLoginTest() {
-        LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("a@b.c", "");
-
-        Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
-    }
-
     @DataProvider
     public Object[][] validDataProvider() {
         return new Object[][]{
@@ -47,50 +39,43 @@ public class LoginTest {
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
     }
 
-    @Test
-    public void negativeLeadsToLoginSubmitPage(){
-        LoginPage loginPage = new LoginPage(webDriver);
-        LoginSubmitPage loginSubmitPage = loginPage.login("truekvazar@@gmail.com", "dimon007");
-
-        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit page is not loaded.");
-        Assert.assertEquals(loginSubmitPage.getUserEmailError(), "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", "userEmail validation message is wrong");
-        Assert.assertEquals(loginSubmitPage.getUserPassError(), "", "userPass validation message appears");
+    @DataProvider
+    public Object[][] negativeDataProvider() {
+        return new Object[][]{
+                { "", "" },
+                { "", "dimon007" },
+                { "truekvazar@gmail.com", "" }
+        };
     }
 
-    @Test
-    public void wrongEmailLoginTest() {
+    @Test(dataProvider = "negativeDataProvider")
+    public void negativeLoginTest(String userEmail, String userPass) {
         LoginPage loginPage = new LoginPage(webDriver);
-        LoginSubmitPage loginSubmitPage = loginPage.login("truekvazar", "dimon007");
-
-        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit page is not loaded.");
-        Assert.assertEquals(loginSubmitPage.getUserEmailError(), "Укажите действительный адрес эл. почты.", "userEmail validation message is wrong");
-        Assert.assertEquals(loginSubmitPage.getUserPassError(), "", "userPass validation message appears");
-    }
-
-    @Test
-    public void blankEmailLoginTest() {
-        LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("", "pass");
+        loginPage.login(userEmail, userPass);
 
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
     }
 
-    @Test
-    public void blankAllLoginTest() {
-        LoginPage loginPage = new LoginPage(webDriver);
-        loginPage.login("", "");
-
-        Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
+    @DataProvider
+    public Object[][] negativeLeadsToLoginSubmitPageDataProvider() {
+        return new Object[][]{
+                { "truekvazar@gmail.com", "dimon", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", "" },
+                { "truekvazar@gmail..com", "dimon007", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", "" },
+                { "truekvazar", "dimon007", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", "" },
+                { "truekvazar@gmail.com", "dimon", "", "Это неверный пароль. Повторите попытку или измените пароль." },
+                { "truekvazar@gmail.com", "Dimon007", "Этот адрес эл. почты не зарегистрирован в LinkedIn. Повторите попытку.", "" },
+                { "truekvazar", "dimon007", "Укажите действительный адрес эл. почты.", "" },
+                { "admin", "admin", "Укажите действительный адрес эл. почты.", "" }
+        };
     }
 
-    @Test
-    public void wrongPassLoginTest() {
+    @Test(dataProvider = "negativeLeadsToLoginSubmitPageDataProvider")
+    public void negativeLeadsToLoginSubmitPage(String userEmail, String userPass, String emailInvalidMessage, String passInvalidMessage) {
         LoginPage loginPage = new LoginPage(webDriver);
-        LoginSubmitPage loginSubmitPage = loginPage.login("truekvazar@gmail.com", "dimon");
+        LoginSubmitPage loginSubmitPage = loginPage.login(userEmail, userPass);
 
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit page is not loaded.");
-        Assert.assertEquals(loginSubmitPage.getUserEmailError(), "", "userEmail validation message is wrong");
-        Assert.assertEquals(loginSubmitPage.getUserPassError(), "Это неверный пароль. Повторите попытку или измените пароль.", "userPass validation message appears");
+        Assert.assertEquals(loginSubmitPage.getUserEmailError(), emailInvalidMessage, "userEmail validation message is wrong");
+        Assert.assertEquals(loginSubmitPage.getUserPassError(), passInvalidMessage, "userPass validation message appears");
     }
-
 }
