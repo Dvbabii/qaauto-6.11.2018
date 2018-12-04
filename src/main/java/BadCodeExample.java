@@ -30,10 +30,10 @@ public class BadCodeExample {
             String resultText = result.getText();
 
             if (resultText.toLowerCase().contains(searchTerm.toLowerCase())) {
-                System.out.println("searchTerm " + searchTerm + "found in block:\n" + resultText);
+                System.out.println("searchTerm " + searchTerm + "found in block:" + resultText);
             }
                 else {
-                System.out.println("searchTerm " + searchTerm + "NOT found in block:\n" + resultText);
+                System.out.println("searchTerm " + searchTerm + "NOT found in block:" + resultText);
                 }
         }
 //        int res = resultList.size();

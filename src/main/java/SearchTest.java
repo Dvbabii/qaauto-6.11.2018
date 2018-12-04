@@ -1,9 +1,15 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 public class SearchTest {
 
@@ -38,16 +44,20 @@ public class SearchTest {
      * - Verify each item contains searchTerm
      * Postcondition:
      * - Close browser
-     */
+     **/
     @Test
-    public void basicSearchTest(){
+    public void basicSearchTest() {
         String searchTerm = "HR";
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
 
         SearchResultsPage searchResultsPage = homePage.search(searchTerm);
         Assert.assertTrue(searchResultsPage.isPageLoaded(), "Result page is not loaded.");
+        Assert.assertEquals(searchResultsPage.getSearchResultsCount(), 10, "Search results count is wrong.");
+        List<String> searchResultList = searchResultsPage.getSearchResults();
 
-
+        for (String searchResult : searchResultList) {
+            Assert.assertTrue(searchResult.toLowerCase().contains(searchTerm.toLowerCase()), "SearchTerm" + searchTerm + " not found in: \n" + searchResult);
+        }
     }
 
 }
