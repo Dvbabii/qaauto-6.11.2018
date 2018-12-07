@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -5,6 +7,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * PageObject class for LoginPage.
+ */
 public class LoginPage extends BasePage{
 
     @FindBy(xpath = "//*[@id='login-email']")
@@ -13,8 +18,13 @@ public class LoginPage extends BasePage{
     private WebElement passwordField;
     @FindBy(xpath = "//*[@id='login-submit']")
     private WebElement signInButton;
+    @FindBy(xpath = "//a[@class='link-forgot-password']")
+    private WebElement forgotPasswordLink;
 
-    //конструктор класса
+    /**
+     * Constructor of LoginPage class.
+     * @param webDriver - webdriver instance from Test.
+     */
     public LoginPage(WebDriver webDriver){
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver,this);
@@ -40,6 +50,24 @@ public class LoginPage extends BasePage{
         }
     }
 
+    /**
+     * Method that click on 'Forgot password' link.
+     * @return RequestPasswordResetPage object.
+     */
+    public RequestPasswordResetPage clickOnForgotPasswordLink() {
+//        try {
+//            sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        forgotPasswordLink.click();
+        return new RequestPasswordResetPage(webDriver);
+    }
+
+    /**
+     * Method to confirm load of page.
+     * @return true/false
+     */
     public boolean isPageLoaded() {
         return signInButton.isDisplayed()
                 && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться")

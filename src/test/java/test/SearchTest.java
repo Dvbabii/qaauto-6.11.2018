@@ -1,34 +1,13 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import page.HomePage;
+import page.SearchResultsPage;
 
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
-public class SearchTest {
-
-    WebDriver webDriver;
-    HomePage homePage;
-
-    @BeforeMethod
-    public void beforeMethod(){
-        webDriver = new ChromeDriver();
-        webDriver.get("https://www.linkedin.com/");
-        LoginPage loginPage = new LoginPage(webDriver);
-        homePage = loginPage.login("truekvazar@gmail.com","dimon007");
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void afterMethod(){
-        webDriver.quit();
-
-    }
+public class SearchTest extends BaseTest {
 
     /**
      * Preconditions:
@@ -47,6 +26,7 @@ public class SearchTest {
      **/
     @Test
     public void basicSearchTest() {
+        HomePage homePage= loginPage.login("truekvazar@gmail.com","linktestdvb01");
         String searchTerm = "HR";
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
 

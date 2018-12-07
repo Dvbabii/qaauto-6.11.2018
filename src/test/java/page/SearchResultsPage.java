@@ -1,4 +1,5 @@
-import org.openqa.selenium.By;
+package page;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +22,7 @@ public class SearchResultsPage extends BasePage{
         PageFactory.initElements(webDriver,this);
     }
 
-    boolean isPageLoaded() {
+    public boolean isPageLoaded() {
         return searchFiltersBar.isDisplayed()
                 && webDriver.getTitle().contains("| Поиск | LinkedIn")
                 //&& webDriver.getTitle().contains(searchTerm)

@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +18,7 @@ public class LoginSubmitPage extends BasePage{
 
 
     public LoginSubmitPage(WebDriver webDriver){
-        //приравниваю webDriver из этого класса к webDriver из класса LoginTest в его теперешнем состоянии
+        //приравниваю webDriver из этого класса к webDriver из класса test.LoginTest в его теперешнем состоянии
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver,this);
     }
