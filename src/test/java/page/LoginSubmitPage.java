@@ -16,13 +16,20 @@ public class LoginSubmitPage extends BasePage{
     @FindBy(xpath = "//div[@id='error-for-password']")
     private WebElement userPassError;
 
-
+    /**
+     * Constructor of LoginSubmitPage class.
+     * @param webDriver - webdriver instance from Test.
+     */
     public LoginSubmitPage(WebDriver webDriver){
         //приравниваю webDriver из этого класса к webDriver из класса test.LoginTest в его теперешнем состоянии
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver,this);
     }
 
+    /**
+     * Method to confirm load of page.
+     * @return true/false
+     */
     public boolean isPageLoaded() {
         return signInSubmitButton.isDisplayed()
                 && loginForm.isDisplayed()
@@ -30,10 +37,18 @@ public class LoginSubmitPage extends BasePage{
                 && webDriver.getCurrentUrl().contains("/login-submit");
     }
 
+    /**
+     * Getting text of email validation error.
+     * @return text of error.
+     */
     public String getUserEmailError(){
         return userEmailError.getText();
     }
 
+    /**
+     * Getting text of password validation error.
+     * @return text of error.
+     */
     public String getUserPassError(){
         return userPassError.getText();
     }

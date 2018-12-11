@@ -4,7 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import page.HomePage;
-import page.LoginPage;
 import page.LoginSubmitPage;
 
 
@@ -13,9 +12,9 @@ public class LoginTest extends BaseTest {
     @DataProvider
     public Object[][] validDataProvider() {
         return new Object[][]{
-                { "truekvazar@gmail.com", "dimon007" },
-                { "truekvazar@GMAIL.COM", "dimon007" },
-                { " truekvazar@gmail.com ", "dimon007" }
+                { "link.test.dvb@gmail.com", "Linktest03" },
+                { "link.test.dvb@GMAIL.COM", "Linktest03" },
+                { " link.test.dvb@gmail.com ", "Linktest03" }
         };
     }
 

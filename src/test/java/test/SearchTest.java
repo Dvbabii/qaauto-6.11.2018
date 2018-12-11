@@ -26,7 +26,7 @@ public class SearchTest extends BaseTest {
      **/
     @Test
     public void basicSearchTest() {
-        HomePage homePage= loginPage.login("truekvazar@gmail.com","linktestdvb01");
+        HomePage homePage= loginPage.login("link.test.dvb@gmail.com","Linktest03");
         String searchTerm = "HR";
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
 
