@@ -13,8 +13,8 @@ public class LoginTest extends BaseTest {
     public Object[][] validDataProvider() {
         return new Object[][]{
                 { "link.test.dvb@gmail.com", "Linktest03" },
-                { "link.test.dvb@GMAIL.COM", "Linktest03" },
-                { " link.test.dvb@gmail.com ", "Linktest03" }
+//                { "link.test.dvb@GMAIL.COM", "Linktest03" },
+//                { " link.test.dvb@gmail.com ", "Linktest03" }
         };
     }
 
@@ -29,8 +29,8 @@ public class LoginTest extends BaseTest {
     public Object[][] negativeDataProvider() {
         return new Object[][]{
                 { "", "" },
-                { "", "dimon007" },
-                { "truekvazar@gmail.com", "" }
+//                { "", "Linktest03" },
+//                { "link.test.dvb@gmail.com", "" }
         };
     }
 

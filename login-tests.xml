@@ -3,6 +3,7 @@
 <suite name="Linkedin login tests">
 
     <test name="Positive">
+        <parameter name="browserName" value="chrome"/>
         <classes>
             <class name="test.LoginTest">
                 <methods>
@@ -13,11 +14,12 @@
     </test>
 
     <test name="Negative">
+        <parameter name="browserName" value="firefox"/>
         <classes>
             <class name="test.LoginTest">
                 <methods>
                     <include name="negativeLoginTest" />
-                    <include name="negativeLeadsToLoginSubmitPage" />
+                    <!--<include name="negativeLeadsToLoginSubmitPage" />-->
                 </methods>
             </class>
         </classes>
